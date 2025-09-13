@@ -1,23 +1,22 @@
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
-import { Flex, Heading, Text } from "@radix-ui/themes";
+import { Box, Flex, Heading, Text } from "@radix-ui/themes";
+import { useAuctionQuery } from "./useAuctionQuery";
 import { PACKAGE } from "./config";
 
-export function OwnedObjects() {
+export function AuctionObjects() {
   const account = useCurrentAccount();
+  const { auctionObjects } = useAuctionQuery();
   const { data, isPending, error } = useSuiClientQuery(
-    "getOwnedObjects",
+    "queryEvents",
     {
-      owner: account?.address as string,
-      options: { showContent: true, showType: true },
-      filter: {
-        Package: PACKAGE,
+      query: {
+        MoveEventType: `${PACKAGE}::auction::AuctionCreatedEvent`,
       },
     },
     {
       enabled: !!account,
     },
   );
-
   if (!account) {
     return;
   }
@@ -33,14 +32,13 @@ export function OwnedObjects() {
   return (
     <Flex direction="column" my="2">
       {data.data.length === 0 ? (
-        <Text>No objects owned by the connected wallet</Text>
+        <Text>No Auction objects</Text>
       ) : (
-        <Heading size="4">Objects owned by the connected wallet</Heading>
+        <Heading size="4">Auction Objects</Heading>
       )}
-      {data.data.map((object) => (
-        <Flex
-          key={object.data?.objectId}
-          direction="column"
+      {auctionObjects?.map((auction) => (
+        <Box
+          id={auction.data?.objectId}
           style={{
             border: "1px solid #e2e8f0", // gray-300
             borderRadius: "8px",
@@ -48,9 +46,8 @@ export function OwnedObjects() {
             marginBottom: "8px",
           }}
         >
-          <Text>Object Type: {JSON.stringify(object.data?.type)}</Text>
-          <Text>Object ID: {object.data?.objectId}</Text>
-        </Flex>
+          <Text>{JSON.stringify(auction.data?.content, null, 2)}</Text>
+        </Box>
       ))}
     </Flex>
   );
