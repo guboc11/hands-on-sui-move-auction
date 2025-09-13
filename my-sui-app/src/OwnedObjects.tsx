@@ -1,5 +1,6 @@
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 import { Flex, Heading, Text } from "@radix-ui/themes";
+import { PACKAGE } from "./config";
 
 export function OwnedObjects() {
   const account = useCurrentAccount();
@@ -9,8 +10,7 @@ export function OwnedObjects() {
       owner: account?.address as string,
       options: { showContent: true, showType: true },
       filter: {
-        Package:
-          "0xbf3dd44668fcc8cbc740f8a3ed5fb2af0d02abbe3a8fbf452331921e82dfc6b9",
+        Package: PACKAGE,
       },
     },
     {

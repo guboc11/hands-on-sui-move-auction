@@ -4,6 +4,7 @@ import {
   SuiObjectResponse,
 } from "@mysten/sui/client";
 import { useEffect, useState } from "react";
+import { PACKAGE } from "./config";
 
 export function useAuctionQuery() {
   const [auctionObjects, setAuctionObjects] = useState<SuiObjectResponse[]>();
@@ -12,8 +13,7 @@ export function useAuctionQuery() {
     const client = new SuiClient({ url: getFullnodeUrl("testnet") });
     const events = await client.queryEvents({
       query: {
-        MoveEventType:
-          "0xbf3dd44668fcc8cbc740f8a3ed5fb2af0d02abbe3a8fbf452331921e82dfc6b9::auction::AuctionCreatedEvent",
+        MoveEventType: `${PACKAGE}::auction::AuctionCreatedEvent`,
       },
       limit: 10,
     });

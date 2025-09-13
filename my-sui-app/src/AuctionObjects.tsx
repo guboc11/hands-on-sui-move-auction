@@ -1,6 +1,7 @@
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
 import { Box, Flex, Heading, Text } from "@radix-ui/themes";
 import { useAuctionQuery } from "./useAuctionQuery";
+import { PACKAGE } from "./config";
 
 export function AuctionObjects() {
   const account = useCurrentAccount();
@@ -9,8 +10,7 @@ export function AuctionObjects() {
     "queryEvents",
     {
       query: {
-        MoveEventType:
-          "0xbf3dd44668fcc8cbc740f8a3ed5fb2af0d02abbe3a8fbf452331921e82dfc6b9::auction::AuctionCreatedEvent",
+        MoveEventType: `${PACKAGE}::auction::AuctionCreatedEvent`,
       },
     },
     {
