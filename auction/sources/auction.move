@@ -3,6 +3,8 @@ module auction::auction;
 
 use sui::sui::{SUI};
 use sui::coin::{Self, Coin};
+use sui::event;
+
 
 // Shared Object
 public struct Auction has key, store {
@@ -21,6 +23,14 @@ public struct Bid has key, store {
 public struct Item has key, store {
   id: UID,
 }
+/// =======================
+/// 이벤트 Structs
+/// =======================
+
+public struct AuctionCreatedEvent has copy, drop {
+    auction_id: ID,
+    item_id: ID,
+}
 
 // Entry Function
 entry fun create_item(ctx: &mut TxContext) {
@@ -36,6 +46,10 @@ entry fun create_auction(item: Item, ctx: &mut TxContext) {
     item,
     bid: option::none()
   };
+  event::emit(AuctionCreatedEvent {
+    auction_id: object::id(&auction),
+    item_id: object::id(&auction.item),
+  });
   transfer::share_object(auction);
 }
 
