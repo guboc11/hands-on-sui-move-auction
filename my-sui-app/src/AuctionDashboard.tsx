@@ -36,6 +36,7 @@ export function AuctionDashboard() {
             <Text>Address: {account.address}</Text>
           </Flex>
           <Flex direction="column" gap="4">
+            <Text>Package: {PACKAGE}</Text>
             <Box>
               <Button
                 onClick={() => {
