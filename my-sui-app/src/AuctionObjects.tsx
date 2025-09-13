@@ -46,7 +46,7 @@ export function AuctionObjects() {
             marginBottom: "8px",
           }}
         >
-          <Text>{JSON.stringify(auction.data?.content.fields)}</Text>
+          <Text>{JSON.stringify(auction.data?.content, null, 2)}</Text>
         </Box>
       ))}
     </Flex>
