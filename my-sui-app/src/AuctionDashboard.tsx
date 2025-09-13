@@ -1,4 +1,7 @@
-import { useCurrentAccount } from "@mysten/dapp-kit";
+import {
+  useCurrentAccount,
+  useSignAndExecuteTransaction,
+} from "@mysten/dapp-kit";
 import {
   Box,
   Button,
@@ -10,9 +13,15 @@ import {
 } from "@radix-ui/themes";
 import { OwnedObjects } from "./OwnedObjects";
 import { AuctionObjects } from "./AuctionObjects";
+import { useState } from "react";
 
 export function AuctionDashboard() {
   const account = useCurrentAccount();
+  const [item, setItem] = useState("");
+  const [auction, setAuction] = useState("");
+  const [bid, setBid] = useState("");
+
+  const { mutate: signAndExcuteTransaction } = useSignAndExecuteTransaction();
 
   return (
     <Container my="2">
@@ -30,7 +39,10 @@ export function AuctionDashboard() {
             </Box>
             <Flex gap="4">
               <Button>create_auction</Button>
-              <TextField.Root>
+              <TextField.Root
+                value={item}
+                onChange={(e) => setItem(e.target.value)}
+              >
                 <TextField.Slot>item</TextField.Slot>
               </TextField.Root>
             </Flex>
@@ -39,10 +51,16 @@ export function AuctionDashboard() {
             </Flex>
             <Flex gap="4">
               <Button>bid</Button>
-              <TextField.Root>
+              <TextField.Root
+                value={auction}
+                onChange={(e) => setAuction(e.target.value)}
+              >
                 <TextField.Slot>auction</TextField.Slot>
               </TextField.Root>
-              <TextField.Root>
+              <TextField.Root
+                value={bid}
+                onChange={(e) => setBid(e.target.value)}
+              >
                 <TextField.Slot>bid</TextField.Slot>
               </TextField.Root>
             </Flex>
