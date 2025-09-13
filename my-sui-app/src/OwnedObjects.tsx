@@ -7,6 +7,7 @@ export function OwnedObjects() {
     "getOwnedObjects",
     {
       owner: account?.address as string,
+      options: { showContent: true, showType: true },
       filter: {
         Package:
           "0xbf3dd44668fcc8cbc740f8a3ed5fb2af0d02abbe3a8fbf452331921e82dfc6b9",
@@ -37,7 +38,17 @@ export function OwnedObjects() {
         <Heading size="4">Objects owned by the connected wallet</Heading>
       )}
       {data.data.map((object) => (
-        <Flex key={object.data?.objectId}>
+        <Flex
+          key={object.data?.objectId}
+          direction="column"
+          style={{
+            border: "1px solid #e2e8f0", // gray-300
+            borderRadius: "8px",
+            padding: "8px",
+            marginBottom: "8px",
+          }}
+        >
+          <Text>Object Type: {JSON.stringify(object.data?.type)}</Text>
           <Text>Object ID: {object.data?.objectId}</Text>
         </Flex>
       ))}

@@ -28,15 +28,18 @@ export function AuctionDashboard() {
             <Box>
               <Button>create_item</Button>
             </Box>
-            <Box>
+            <Flex gap="4">
               <Button>create_auction</Button>
-            </Box>
-            <Box>
+              <TextField.Root />
+            </Flex>
+            <Flex gap="4">
               <Button>create_bid</Button>
-            </Box>
-            <Box>
+            </Flex>
+            <Flex gap="4">
               <Button>bid</Button>
-            </Box>
+              <TextField.Root />
+              <TextField.Root />
+            </Flex>
           </Flex>
         </div>
       ) : (
